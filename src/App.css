@@ -18,3 +18,11 @@ body,
 h1 {
     margin: 20px 0 0;
 }
+
+.game-container {
+    height: 350px;
+    margin: auto;
+    padding: 20px 30px;
+    position: relative;
+    width: 450px;
+}
