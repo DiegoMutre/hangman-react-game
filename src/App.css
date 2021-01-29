@@ -26,3 +26,10 @@ h1 {
     position: relative;
     width: 450px;
 }
+
+.figure-container {
+    fill: transparent;
+    stroke: #fff;
+    stroke-linecap: round;
+    stroke-width: 4px;
+}
