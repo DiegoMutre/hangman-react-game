@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Figure from "./components/Figure";
 import Header from "./components/Header";
@@ -12,6 +12,37 @@ function App() {
     const [correctLetters, setCorrectLetters] = useState([]);
     const [wrongLetters, setWrongLetters] = useState([]);
     const [showNotification, setShowNotification] = useState(false);
+
+    // Add keydown event to global window
+    useEffect(() => {
+        const handleKeyDown = ({ key, keyCode }) => {
+            if (isPlayable && keyCode >= 65 && keyCode <= 90) {
+                const letter = key.toLowerCase();
+                if (selectedWord.includes(letter)) {
+                    !correctLetters.includes(letter)
+                        ? setCorrectLetters(currentLetters => [
+                              ...currentLetters,
+                              letter,
+                          ])
+                        : // Show notification here
+                          alert("Letter has already been used");
+                } else {
+                    !wrongLetters.includes(letter)
+                        ? setWrongLetters(currentLetters => [
+                              ...currentLetters,
+                              letter,
+                          ])
+                        : // Show notification here
+                          alert("Letter has already been used");
+                }
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        // Remove the previous event in the next rendering
+        return _ => window.removeEventListener("keydown", handleKeyDown);
+    }, [correctLetters, wrongLetters]);
 
     return (
         <>
