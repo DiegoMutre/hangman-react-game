@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Figure from "./components/Figure";
 import Header from "./components/Header";
+import Notification from "./components/Notification";
 import Word from "./components/Word";
 import WrongLetters from "./components/WrongLetters";
 import { showNotification as show } from "./helpers/helper";
@@ -56,6 +57,7 @@ function App() {
                     selectedWord={selectedWord}
                 />
             </div>
+            <Notification showNotification={showNotification} />
         </>
     );
 }
