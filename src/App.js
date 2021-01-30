@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Figure from "./components/Figure";
 import Header from "./components/Header";
+import WrongLetters from "./components/WrongLetters";
 
 const words = ["application", "programming", "interface", "wizard"];
 let selectedWord = words[Math.floor(Math.random() * words.length)];
@@ -42,13 +43,14 @@ function App() {
 
         // Remove the previous event in the next rendering
         return _ => window.removeEventListener("keydown", handleKeyDown);
-    }, [correctLetters, wrongLetters]);
+    }, [correctLetters, wrongLetters, isPlayable]);
 
     return (
         <>
             <Header />
             <div className="game-container">
                 <Figure />
+                <WrongLetters wrongLetters={wrongLetters} />
             </div>
         </>
     );
