@@ -50,3 +50,22 @@ h1 {
 .wrong-letters-container span {
     font-size: 24px;
 }
+
+.word {
+    bottom: 10px;
+    display: flex;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+}
+
+.letter {
+    align-items: center;
+    border-bottom: 3px solid #2980b9;
+    display: inline-flex;
+    font-size: 30px;
+    height: 50px;
+    justify-content: center;
+    margin: 0 3px;
+    width: 20px;
+}
