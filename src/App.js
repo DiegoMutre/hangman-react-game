@@ -46,6 +46,18 @@ function App() {
         return _ => window.removeEventListener("keydown", handleKeyDown);
     }, [correctLetters, wrongLetters, isPlayable]);
 
+    const playAgain = _ => {
+        setIsPlayable(true);
+
+        // Empty arrays
+        setCorrectLetters([]);
+        setWrongLetters([]);
+
+        // Get random word
+        const random = Math.floor(Math.random() * words.length);
+        selectedWord = words[random];
+    };
+
     return (
         <>
             <Header />
