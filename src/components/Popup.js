@@ -25,7 +25,6 @@ const Popup = ({
 
     useEffect(_ => {
         setIsPlayable(playable);
-        console.log("Executed");
     });
 
     return (

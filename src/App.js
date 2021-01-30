@@ -3,6 +3,7 @@ import "./App.css";
 import Figure from "./components/Figure";
 import Header from "./components/Header";
 import Notification from "./components/Notification";
+import Popup from "./components/Popup";
 import Word from "./components/Word";
 import WrongLetters from "./components/WrongLetters";
 import { showNotification as show } from "./helpers/helper";
@@ -69,6 +70,14 @@ function App() {
                     selectedWord={selectedWord}
                 />
             </div>
+
+            <Popup
+                correctLetters={correctLetters}
+                wrongLetters={wrongLetters}
+                selectedWord={selectedWord}
+                setIsPlayable={setIsPlayable}
+                playAgain={playAgain}
+            />
             <Notification showNotification={showNotification} />
         </>
     );
