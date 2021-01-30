@@ -4,6 +4,7 @@ import Figure from "./components/Figure";
 import Header from "./components/Header";
 import Word from "./components/Word";
 import WrongLetters from "./components/WrongLetters";
+import { showNotification as show } from "./helpers/helper";
 
 const words = ["application", "programming", "interface", "wizard"];
 let selectedWord = words[Math.floor(Math.random() * words.length)];
@@ -26,16 +27,14 @@ function App() {
                               ...currentLetters,
                               letter,
                           ])
-                        : // Show notification here
-                          alert("Letter has already been used");
+                        : show(setShowNotification);
                 } else {
                     !wrongLetters.includes(letter)
                         ? setWrongLetters(currentLetters => [
                               ...currentLetters,
                               letter,
                           ])
-                        : // Show notification here
-                          alert("Letter has already been used");
+                        : show(setShowNotification);
                 }
             }
         };
