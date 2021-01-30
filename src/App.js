@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Figure from "./components/Figure";
 import Header from "./components/Header";
+import Word from "./components/Word";
 import WrongLetters from "./components/WrongLetters";
 
 const words = ["application", "programming", "interface", "wizard"];
@@ -51,6 +52,10 @@ function App() {
             <div className="game-container">
                 <Figure />
                 <WrongLetters wrongLetters={wrongLetters} />
+                <Word
+                    correctLetters={correctLetters}
+                    selectedWord={selectedWord}
+                />
             </div>
         </>
     );
