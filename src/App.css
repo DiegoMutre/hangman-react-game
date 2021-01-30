@@ -33,3 +33,20 @@ h1 {
     stroke-linecap: round;
     stroke-width: 4px;
 }
+
+.wrong-letters-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 20px;
+    text-align: right;
+    top: 20px;
+}
+
+.wrong-letters-container p {
+    margin: 0 0 5px;
+}
+
+.wrong-letters-container span {
+    font-size: 24px;
+}
