@@ -6,10 +6,10 @@ import Notification from "./components/Notification";
 import Popup from "./components/Popup";
 import Word from "./components/Word";
 import WrongLetters from "./components/WrongLetters";
-import { showNotification as show } from "./helpers/helper";
+import { showNotification as show, getRandomWord } from "./helpers/helper";
 
-// const words = ["application", "programming", "interface", "wizard"];
-// let selectedWord = words[Math.floor(Math.random() * words.length)];
+const words = ["application", "programming", "interface", "wizard"];
+let selectedWord = getRandomWord(words);
 
 function App() {
     // States
