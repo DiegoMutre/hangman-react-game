@@ -1,13 +1,14 @@
 import PropTypes from "prop-types";
 
-const Notification = ({ showNotification }) => (
-    <div className={`notification-container ${showNotification ? "show" : ""}`}>
-        <p>You have already entered this letter</p>
+const Notification = ({ message = "", show = false }) => (
+    <div className={`notification-container ${show && "show"}`}>
+        <p>{message}</p>
     </div>
 );
 
 Notification.propTypes = {
-    showNotification: PropTypes.bool.isRequired,
+    show: PropTypes.bool.isRequired,
+    message: PropTypes.string.isRequired,
 };
 
 export default Notification;
