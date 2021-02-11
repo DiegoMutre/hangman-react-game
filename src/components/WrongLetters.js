@@ -1,19 +1,22 @@
 import PropTypes from "prop-types";
 
-const WrongLetters = ({ wrongLetters }) => (
-    <div className="wrong-letters-container">
-        <div>
-            {wrongLetters.length > 0 && <p>Wrong</p>}
-            {wrongLetters
-                .map((letter, i) => <span key={i}>{letter}</span>)
-                .reduce(
-                    // If the prev value is equal to the initialValue(null), it only return the first letter given
-                    (prev, curr) => (prev === null ? curr : [prev, ", ", curr]),
-                    null
-                )}
+const WrongLetters = ({ wrongLetters }) => {
+    // Format the wrongLetters array to a beauty span array with each letter
+    const lettersFormatted = wrongLetters
+        .map(letter => <span key={letter}>{letter}</span>)
+        .reduce((prev, curr) => {
+            return prev === null ? curr : [prev, ", ", curr];
+        }, null);
+
+    return (
+        <div className="wrong-letters-container">
+            <div>
+                {wrongLetters.length > 0 && <p>Wrong</p>}
+                {lettersFormatted}
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 WrongLetters.propTypes = {
     wrongLetters: PropTypes.array.isRequired,
