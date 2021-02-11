@@ -6,77 +6,60 @@ import Notification from "./components/Notification";
 import Popup from "./components/Popup";
 import Word from "./components/Word";
 import WrongLetters from "./components/WrongLetters";
-import { showNotification as show, getRandomWord } from "./helpers/helper";
+import { getRandomWord } from "./helpers/helper";
+import { useLetter } from "./hooks/useLetter";
 
 const words = ["application", "programming", "interface", "wizard"];
 let selectedWord = getRandomWord(words);
 
 function App() {
-    // States
-    // const [isPlayable, setIsPlayable] = useState(true);
-    // const [correctLetters, setCorrectLetters] = useState([]);
-    // const [wrongLetters, setWrongLetters] = useState([]);
-    // const [showNotification, setShowNotification] = useState(false);
+    // Use custom hook 'useLetter'
+    const [letters, letterActions, canShowNotification] = useLetter(
+        selectedWord
+    );
+    const [canPlay, setCanPlay] = useState(true);
 
     // Add keydown event to global window
     useEffect(() => {
         const handleKeyDown = ({ key, keyCode }) => {
-            // if (isPlayable && keyCode >= 65 && keyCode <= 90) {
-            //     const letter = key.toLowerCase();
-            //     if (selectedWord.includes(letter)) {
-            //         !correctLetters.includes(letter)
-            //             ? setCorrectLetters(currentLetters => [
-            //                   ...currentLetters,
-            //                   letter,
-            //               ])
-            //             : show(setShowNotification);
-            //     } else {
-            //         !wrongLetters.includes(letter)
-            //             ? setWrongLetters(currentLetters => [
-            //                   ...currentLetters,
-            //                   letter,
-            //               ])
-            //             : show(setShowNotification);
-            //     }
-            // }
+            if (canPlay && keyCode >= 65 && keyCode <= 90) {
+                const letter = key.toLowerCase();
+                letterActions.checkLetter(letter);
+            }
         };
-
         window.addEventListener("keydown", handleKeyDown);
 
         // Remove the previous event in the next rendering
         return _ => window.removeEventListener("keydown", handleKeyDown);
-    }, []);
+    }, [letterActions, canPlay]);
 
     const playAgain = _ => {
-        // setIsPlayable(true);
-        // // Empty arrays
-        // setCorrectLetters([]);
-        // setWrongLetters([]);
-        // // Get random word
-        // const random = Math.floor(Math.random() * words.length);
-        // selectedWord = words[random];
+        letterActions.resetLetters();
+        selectedWord = getRandomWord(words);
+        setCanPlay(true);
     };
 
     return (
         <>
             <Header />
             <div className="game-container">
-                <Figure />
-                <WrongLetters />
+                <Figure wrongLetters={letters.wrongLetters} />
+                <WrongLetters wrongLetters={letters.wrongLetters} />
                 <Word
-                // correctLetters={correctLetters}
-                // selectedWord={selectedWord}
+                    correctLetters={letters.correctLetters}
+                    selectedWord={selectedWord}
                 />
             </div>
 
             <Popup
-            // correctLetters={correctLetters}
-            // wrongLetters={wrongLetters}
-            // selectedWord={selectedWord}
-            // setIsPlayable={setIsPlayable}
-            // playAgain={playAgain}
+                letters={letters}
+                selectedWord={selectedWord}
+                gameActions={{ playAgain, setCanPlay }}
             />
-            <Notification />
+            <Notification
+                message="You have already entered this letter"
+                show={canShowNotification}
+            />
         </>
     );
 }
