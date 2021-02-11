@@ -24,3 +24,6 @@ export function checkWin(correct, wrong, word) {
 
     return status;
 }
+
+export const getRandomWord = (words = []) =>
+    words[Math.floor(Math.random() * words.length)];
