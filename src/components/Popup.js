@@ -1,52 +1,66 @@
 import PropTypes from "prop-types";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { checkWin } from "../helpers/helper";
 
-const Popup = ({
-    correctLetters,
-    wrongLetters,
-    selectedWord,
-    setIsPlayable,
-    playAgain,
-}) => {
-    let finalMessage = "";
-    let finalMessageRevealWord = "";
-    let playable = true;
+const Popup = ({ letters = {}, selectedWord = "", gameActions }) => {
+    const finalMessage = useRef("");
 
-    if (checkWin(correctLetters, wrongLetters, selectedWord) === "win") {
-        finalMessage = "Congratulations, You Won! 😃";
-        playable = false;
-    } else if (
-        checkWin(correctLetters, wrongLetters, selectedWord) === "lose"
-    ) {
-        finalMessage = "Unfortunately you lost. 😕";
-        playable = false;
-    }
+    useEffect(() => {
+        const checkStatus = () => {
+            // Check to win
+            if (
+                checkWin(
+                    letters.correctLetters,
+                    letters.wrongLetters,
+                    selectedWord
+                ) === "win"
+            ) {
+                finalMessage.current = "Congratulations, You Won! 😃";
+                gameActions.setCanPlay(false);
+                return;
+            }
 
-    useEffect(_ => {
-        setIsPlayable(playable);
+            // Check to lose
+            if (
+                checkWin(
+                    letters.correctLetters,
+                    letters.wrongLetters,
+                    selectedWord
+                ) === "lose"
+            ) {
+                finalMessage.current = "Unfortunately, You Lose 😥";
+                gameActions.setCanPlay(false);
+                return;
+            }
+        };
+
+        checkStatus();
     });
 
     return (
         <div
             className="popup-container"
-            style={finalMessage !== "" ? { display: "flex" } : {}}
+            style={finalMessage.current ? { display: "flex" } : {}}
         >
             <div className="popup">
-                <h2>{finalMessage}</h2>
-                <h3>{finalMessageRevealWord}</h3>
-                <button onClick={playAgain}>Play Again</button>
+                <h2>{finalMessage.current}</h2>
+                <button
+                    onClick={() => {
+                        gameActions.playAgain();
+                        finalMessage.current = "";
+                    }}
+                >
+                    Play Again
+                </button>
             </div>
         </div>
     );
 };
 
 Popup.propTypes = {
-    correctLetters: PropTypes.array.isRequired,
-    wrongLetters: PropTypes.array.isRequired,
+    letters: PropTypes.object.isRequired,
     selectedWord: PropTypes.string.isRequired,
-    setIsPlayable: PropTypes.func.isRequired,
-    playAgain: PropTypes.func.isRequired,
+    gameActions: PropTypes.object.isRequired,
 };
 
 export default Popup;
